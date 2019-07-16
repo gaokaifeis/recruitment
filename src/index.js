@@ -9,19 +9,29 @@ import reducers from './reducer'
 import './config'
 import Login from './container/login'
 import Register from './container/register'
+import AuthRoute from './components/authroute'
 
-const store = createStore(reducers, compose(
-  applyMiddleware(thunk),
-  window.devToolsExtension ? window.devToolsExtension() : f => f
+import './index.css'
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+const store = createStore(reducers, composeEnhancers(
+	applyMiddleware(thunk)
 ))
+
+function Boss () {
+  return <h2>Boss</h2>
+}
 
 
 ReactDOM.render((
   <Provider store={store}>
     <BrowserRouter>
       <div>
+        <AuthRoute></AuthRoute>
         <Route path='/login' component={Login}></Route>
         <Route path='/register' component={Register}></Route>
+        <Route path='/boss' component={Boss}></Route>
       </div>
     </BrowserRouter>
   </Provider>
