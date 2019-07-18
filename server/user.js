@@ -60,6 +60,22 @@ Router.get('/info', function (req, res) {
   })
 })
 
+Router.post('/update', function (req, res) {
+  const { userid } = req.cookies
+  if (!userid) {
+    return res.json({code: 1, msg: '用户未登录'})
+  }
+  const body = req.body
+  User.findByIdAndUpdate(userid, body, function (err, doc) {
+    const data = Object.assign({}, {
+      user: doc.user,
+      type: doc.type,
+    }, body)
+    return res.json({code: 0, data})
+  })
+})
+
+
 module.exports = Router
 
 
