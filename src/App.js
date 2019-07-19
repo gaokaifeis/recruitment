@@ -8,13 +8,12 @@ import { Provider } from 'react-redux'
 import reducers from './reducer'
 
 import AuthRoute from './components/authroute'
+import Dashboard from './components/dashboard'
 
 import Login from './container/login'
 import Register from './container/register'
 import BossInfo from './container/bossinfo'
 import GeniusInfo from './container/geniusinfo'
-
-
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -33,6 +32,7 @@ function App () {
           <Route path='/geniusinfo' component={GeniusInfo}></Route>
           <Route path='/login' component={Login}></Route>
           <Route path='/register' component={Register}></Route>
+          <Route component={Dashboard}></Route>
         </Switch>
       </div>
     </BrowserRouter>
