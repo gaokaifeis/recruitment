@@ -1,13 +1,13 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import axios from 'axios'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 import { loadData} from '../../redux/user.redux'
 
 @withRouter
 @connect(
-  null,
+  state => state.user,
   { loadData }
 )
 class AuthRoute extends Component {
@@ -35,7 +35,11 @@ class AuthRoute extends Component {
   }
 
   render () {
-    return null
+    return (
+      <>
+        {this.props.redirectTo ? <Redirect to={this.props.redirectTo} /> : null}
+      </>
+    )
   }
 }
 

@@ -21,7 +21,7 @@ export function user (state=defaultState, action) {
     case ERRO_MEG:
       return {...state, isAuth: false, msg: action.msg}
     case LOAD_DATA:
-      return {...state, msg: '', ...action.payload}
+      return {...state, msg: '', redirectTo: getRedirectPath(action.payload), ...action.payload}
     default:
       return state
   }
