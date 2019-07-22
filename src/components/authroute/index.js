@@ -35,9 +35,10 @@ class AuthRoute extends Component {
   }
 
   render () {
+    const pathname = this.props.location.pathname
     return (
       <>
-        {this.props.redirectTo ? <Redirect to={this.props.redirectTo} /> : null}
+        {pathname === '/' && this.props.redirectTo ? <Redirect to={this.props.redirectTo} /> : null}
       </>
     )
   }

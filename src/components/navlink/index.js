@@ -25,11 +25,11 @@ class NavLinkBar extends Component {
               icon={{uri: require(`./img/${v.icon}.png`)}}
               selectedIcon={{uri: require(`./img/${v.icon}-active.png`)}}
               selected={pathname === v.path}
+              noRenderContent={true}
               onPress={() => {
                 this.props.history.push(v.path)
               }}
             >
-
             </TabBar.Item>
           ))
         }

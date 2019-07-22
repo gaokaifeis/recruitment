@@ -6,15 +6,11 @@ import { Switch, Route } from 'react-router-dom'
 import NavLinkBar from '../navlink'
 
 import Boss from '../boss'
+import Genius from '../genius'
+import User from '../user'
 
-function Genius () {
-  return <h2>Genius</h2>
-}
 function Msg () {
   return <h2>Msg</h2>
-}
-function User () {
-  return <h2>User</h2>
 }
 
 @connect(
@@ -22,10 +18,12 @@ function User () {
   null
 )
 class Dashboard extends Component {
-
   render () {
     const { type } = this.props
     const { pathname } = this.props.location
+    if (pathname === '/') {
+      return null
+    }
     const navList = [
       {
         path: '/boss',
@@ -59,7 +57,7 @@ class Dashboard extends Component {
       }
     ]
     return (
-      <>
+      <div>
         <NavBar className='fixd-header' mode="dard">
           {navList.find(v => v.path === pathname).title}
         </NavBar>
@@ -72,9 +70,8 @@ class Dashboard extends Component {
             }
           </Switch>
         </div>
-
-        <NavLinkBar data={navList} />
-      </>
+        <NavLinkBar data={navList} ></NavLinkBar>
+      </div>
     )
   }
 }
