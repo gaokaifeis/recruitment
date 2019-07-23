@@ -5,11 +5,13 @@ import { Redirect } from 'react-router-dom'
 
 import Logo from '../../components/logo'
 import { login } from '../../redux/user.redux'
+import { immocForm } from '../../components/imooc-form'
 
 @connect(
   state => state.user,
   { login }
 )
+@immocForm
 class Login extends Component {
   constructor(props) {
     super (props)
@@ -25,11 +27,11 @@ class Login extends Component {
     this.props.history.push('/register')
   }
 
-  handleChange (key, val) {
-    this.setState({
-      [key]: val
-    })
-  }
+  // handleChange (key, val) {
+  //   this.setState({
+  //     [key]: val
+  //   })
+  // }
 
   handleLogin () {
     this.props.login(this.state)
