@@ -4,12 +4,12 @@ import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
 import Logo from '../../components/logo'
-import { login } from '../../redux/user.redux'
+import { login, reset } from '../../redux/user.redux'
 import { immocForm } from '../../components/imooc-form'
 
 @connect(
   state => state.user,
-  { login }
+  { login, reset }
 )
 @immocForm
 class Login extends Component {
@@ -24,6 +24,7 @@ class Login extends Component {
   }
 
   register () {
+    this.props.reset()
     this.props.history.push('/register')
   }
 
@@ -38,9 +39,10 @@ class Login extends Component {
   }
 
   render () {
+    const { pathname } = this.props.location
     return (
       <div>
-        {this.props.redirectTo ? <Redirect to={this.props.redirectTo} /> : null}
+        {this.props.redirectTo && this.props.redirectTo !== pathname ? <Redirect to={this.props.redirectTo} /> : null}
         <Logo></Logo>
         <WingBlank>
           <List>

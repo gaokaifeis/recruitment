@@ -6,6 +6,7 @@ const AUTH_SUCCESS = 'AUTH_SUCCESS'
 const ERRO_MEG = 'ERRO_MEG'
 const LOGOUT = 'LOGOUT'
 const LOAD_DATA = 'LOAD_DATA'
+const RESET = 'RESET'
 
 const defaultState = {
   redirectTo: '',
@@ -24,6 +25,8 @@ export function user (state=defaultState, action) {
       return {...state, msg: '', redirectTo: getRedirectPath(action.payload), ...action.payload}
     case LOGOUT:
       return {...defaultState, redirectTo: '/login'}
+    case RESET:
+      return {...defaultState}
     default:
       return state
   }
@@ -98,4 +101,8 @@ export function update (data) {
 
 export function logoutSubmit () {
   return { type: LOGOUT }
+}
+
+export function reset () {
+  return { type: RESET }
 }
