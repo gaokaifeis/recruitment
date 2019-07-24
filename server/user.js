@@ -5,6 +5,7 @@ const utils = require('utility')
 
 const model = require('./model')
 const User = model.getModel('user')
+const Chat = model.getModel('chat')
 const Router = express.Router()
 
 const _filter = {pwd: 0, __v: 0}
@@ -73,6 +74,19 @@ Router.post('/update', function (req, res) {
       type: doc.type,
     }, body)
     return res.json({code: 0, data})
+  })
+})
+
+Router.get('/getmsglist', (req, res) => {
+  const { userid } = req.cookies
+  if (!userid) {
+    return res.json({code: 1, msg: '用户未登录'})
+  }
+  // {'$or': [{from: userid, to: userid}]}
+  Chat.find({}, (err, doc) => {
+    if (!err) {
+      return res.json({code: 0, msgs: doc})
+    }
   })
 })
 

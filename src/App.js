@@ -14,6 +14,7 @@ import Login from './container/login'
 import Register from './container/register'
 import BossInfo from './container/bossinfo'
 import GeniusInfo from './container/geniusinfo'
+import Chat from './components/chat'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -32,6 +33,7 @@ function App () {
           <Route path='/geniusinfo' component={GeniusInfo}></Route>
           <Route path='/login' component={Login}></Route>
           <Route path='/register' component={Register}></Route>
+          <Route path='/chat/:user' component={Chat}></Route>
           <Route component={Dashboard}></Route>
         </Switch>
       </div>
