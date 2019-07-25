@@ -105,7 +105,6 @@ Router.post('/readmsg', (req, res) => {
   const { from } = req.body
   Chat.update({from, to: userid, read: false}, {'$set': {read: true}}, {'multi': true}, (err, doc) => {
     if (!err) {
-      console.log(doc)
       return res.json({code: 0, num: doc.nModified})
     }
     return res.json({code: 1, msg: '修改失败'})
