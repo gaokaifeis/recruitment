@@ -7,13 +7,16 @@ const socket = io('ws://localhost:9093')
 const MSG_LIST = 'MSG_LIST'
 // 读取信息
 const MSG_RECV = 'MSG_RECV'
+//  读取信息开始，保证只执行一次
+const MSG_RECV_ONCE = 'MSG_RECV_ONCE'
 // 表示已读
 const MSG_READ = 'MSG_READ'
 
 const defaultState = {
   chatmsg: [],
   users: [],
-  unread: 0
+  unread: 0,
+  fetch: false
 }
 
 export function chat(state=defaultState, action) {
@@ -23,6 +26,8 @@ export function chat(state=defaultState, action) {
     case MSG_RECV:
       const n = action.payload.msg.to === action.payload.userid ? 1 : 0
       return {...state, chatmsg: [...state.chatmsg, action.payload.msg], unread:state.unread + n}
+    case MSG_RECV_ONCE:
+      return {...state, fetch: true}
     case MSG_READ:
       return {...state, chatmsg: state.chatmsg.map(v => {
         if (v.from === action.payload.from && v.to === action.payload.userid) {
@@ -47,6 +52,10 @@ function msgRecv (msg, userid) {
     type: MSG_RECV,
     payload: {msg, userid}
   }
+}
+
+function msgRecvOnce() {
+  return {type: MSG_RECV_ONCE}
 }
 
 function msgRead ({from, userid, num}) {
@@ -76,6 +85,7 @@ export function sendMsg ({from, to, msg}) {
 
 export function recvMsg () {
   return (dispatch, getState) => {
+    dispatch(msgRecvOnce())
     socket.on('recvmsg', data => {
       const userid = getState().user._id
       dispatch(msgRecv(data, userid))

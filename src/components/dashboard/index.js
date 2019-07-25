@@ -19,7 +19,7 @@ import Msg from '../msg'
 class Dashboard extends Component {
 
   componentDidMount () {
-    if (!this.props.chat.chatmsg.length) {
+    if (!this.props.chat.fetch) {
       this.props.getMsgList()
       this.props.recvMsg()
     }
