@@ -82,11 +82,33 @@ Router.get('/getmsglist', (req, res) => {
   if (!userid) {
     return res.json({code: 1, msg: '用户未登录'})
   }
+  User.find({}, (err, userdoc) => {
+    let users = {}
+    userdoc.forEach(v => {
+      users[v._id] = {name: v.user, avatar: v.avatar}
+    })
+    Chat.find({'$or': [{from: userid}, {to: userid}]}, (err, doc) => {
+      if (!err) {
+        return res.json({code: 0, msgs: doc, users: users})
+      }
+    })
+  })
   // {'$or': [{from: userid, to: userid}]}
-  Chat.find({}, (err, doc) => {
+  
+})
+
+Router.post('/readmsg', (req, res) => {
+  const { userid } = req.cookies
+  if (!userid) {
+    return res.json({code: 1, msg: '用户未登录'})
+  }
+  const { from } = req.body
+  Chat.update({from, to: userid, read: false}, {'$set': {read: true}}, {'multi': true}, (err, doc) => {
     if (!err) {
-      return res.json({code: 0, msgs: doc})
+      console.log(doc)
+      return res.json({code: 0, num: doc.nModified})
     }
+    return res.json({code: 1, msg: '修改失败'})
   })
 })
 
